@@ -1,0 +1,215 @@
+/* src/components/Table/Table.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Заголовок */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+/* Таблица */
+.tableWrapper {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: transparent;
+    border: #64748b 3px solid;
+}
+
+.ActionsContainer {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
+    font-size: 14px;
+    
+}
+
+.headerCell {
+    border-radius: 15px;
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.headerCellContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.sortable:hover {
+    background-color: #ffffff0d;
+}
+
+.sortIndicator {
+    margin-left: 6px;
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.cell {
+    padding: 14px 16px;
+    color: #fff;
+}
+.row {
+    border-radius: 15px;
+}
+
+.row:hover {
+    background-color: #ffffff0d;
+}
+
+.actionsCell {
+    width: 100px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.editButton, .deleteButton {
+    padding: 6px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.editButton:hover {
+    background: #e2e8f0;
+    transform: scale(1.1);
+}
+
+.deleteButton:hover {
+    background: #fee2e2;
+    transform: scale(1.1);
+}
+
+/* Пагинация */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 0;
+}
+
+.pageButton {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pageButton:hover:not(:disabled) {
+    background-color: #ffffff0d;
+}
+
+.pageButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.activePage {
+    background-color: #ffffff0d;
+    color: #62ba93;
+}
+
+.activePage:hover {
+    background-color: #ffffff0d;
+    color: #62ba93;
+}
+
+.NextButton:hover {
+    color: #62ba93;
+    background-color: transparent;
+}
+
+.ActionButton {
+    padding: 7px 10px;
+}
+
+.emptyState {
+    background: white;
+}
+
+.table tbody {
+  display: block;
+  min-height: 392px; /* или высота, соответствующая вашему itemsPerPage */
+}
+
+.table thead, .table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tableWrapper {
+        overflow-x: auto;
+    }
+    
+    .table {
+        min-width: 600px;
+    }
+    
+    .pagination {
+        justify-content: center;
+    }
+    
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}

@@ -1,0 +1,162 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+.tableWrapper {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 14px;
+}
+
+.table th {
+    background: #f8f9fa;
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #1e293b;
+    border-bottom: 2px solid #e2e8f0;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.table th:hover {
+    background: #f1f5f9;
+}
+
+.table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Статусы */
+.status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Действия */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.editButton, .deleteButton {
+    padding: 6px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.editButton:hover {
+    background: #e2e8f0;
+    transform: scale(1.1);
+}
+
+.deleteButton:hover {
+    background: #fee2e2;
+    transform: scale(1.1);
+}
+
+/* Пагинация */
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 0;
+}
+
+.pageButton {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pageButton:hover:not(:disabled) {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.pageButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.activePage {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.activePage:hover {
+    background: #2563eb;
+}
+
+/* Загрузка */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tableWrapper {
+        overflow-x: auto;
+    }
+    
+    .table {
+        min-width: 600px;
+    }
+    
+    .pagination {
+        justify-content: center;
+    }
+}
