@@ -1,3 +1,7 @@
+/**
+ * Глобальный экземпляр axios для взаимодействия с API
+ * Настроен с базовым URL и стандартными заголовками
+ */
 import axios from 'axios';
 import {BASE_URL} from "../config"
 

@@ -1,0 +1,11 @@
+@media (max-width: 875px) {
+    .AddButtonText {
+        display: none;
+    }
+}
+
+@media (min-width: 876px) {
+    .AddButtonText {
+        display: block;
+    }
+}

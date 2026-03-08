@@ -1,3 +1,6 @@
+/**
+ * Универсальный компонент таблицы с поддержкой сортировки и пагинации
+ */
 import { useState, type ReactNode } from "react";
 import styles from "./Table.module.css";
 import clsx from "clsx";
@@ -13,6 +16,7 @@ interface TableProps<T extends object> {
   itemsPerPage?: number;
   onEdit?: (item: T) => void;
   onDelete?: (item: T) => void;
+  onRowClick?: (item: T) => void;
   className?: string;
   loading?: boolean;
   renderActions?: ReactNode;
@@ -22,10 +26,10 @@ interface TableProps<T extends object> {
 function Table<T extends object>({
   data,
   columns,
-  title,
   itemsPerPage = 5,
   onEdit,
   onDelete,
+  onRowClick,
   className,
   renderActions,
   rowKey = "id" as keyof T,
@@ -39,36 +43,36 @@ function Table<T extends object>({
     direction: "ascending",
   });
 
-  // Функция для получения уникального ключа строки
+  // Генерация уникального ключа для каждой строки таблицы
   const getRowKey = (item: T, index: number): string | number => {
     if (typeof rowKey === "function") {
       return rowKey(item);
     }
 
-    // Безопасно получаем значение ключа
+    // Попытка извлечь значение ключа по заданному полю или функции
     const keyValue = item[rowKey];
 
-    // Проверяем, что keyValue - это string, number или можно преобразовать
+    // Валидация типа ключа (должен быть строкой или числом)
     if (keyValue !== undefined && keyValue !== null) {
       if (typeof keyValue === "string" || typeof keyValue === "number") {
         return keyValue;
       }
-      // Если это другой тип, преобразуем в строку
+      // Приведение к строке для нетривиальных типов
       return String(keyValue);
     }
 
-    // Если ключ не найден, используем индекс
+    // Резервный вариант: использование индекса строки
     return `row-${index}-${Date.now()}`;
   };
 
-  // Сортировка данных
+  // Логика сортировки данных на основе текущей конфигурации
   const sortedData = [...data].sort((a, b) => {
     if (!sortConfig.key) return 0;
 
     const aValue = a[sortConfig.key as keyof T];
     const bValue = b[sortConfig.key as keyof T];
 
-    // Сортировка для разных типов
+    // Обработка различных типов данных для корректного сравнения
     if (typeof aValue === "string" && typeof bValue === "string") {
       return sortConfig.direction === "ascending"
         ? aValue.localeCompare(bValue)
@@ -81,7 +85,7 @@ function Table<T extends object>({
         : bValue - aValue;
     }
 
-    // Сравнение boolean
+    // Сравнение логических значений
     if (typeof aValue === "boolean" && typeof bValue === "boolean") {
       if (sortConfig.direction === "ascending") {
         return aValue === bValue ? 0 : aValue ? 1 : -1;
@@ -90,11 +94,11 @@ function Table<T extends object>({
       }
     }
 
-    // Если типы разные или не поддерживаются
+    // Сохранение исходного порядка для несовместимых типов
     return 0;
   });
 
-  // Пагинация
+  // Расчет данных для текущей страницы
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
   const paginatedData = sortedData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -115,16 +119,16 @@ function Table<T extends object>({
   };
 
   return (
-    <div className={clsx(styles.container, className)}>
+    <div className={clsx(styles.Container, className)}>
       {renderActions && (
         <div className={styles.ActionsContainer}>
           {renderActions && renderActions}
         </div>
       )}
 
-      {/* Таблица */}
-      <div className={styles.tableWrapper}>
-        <table className={styles.table}>
+      {/* Основная табличная часть */}
+      <div className={styles.TableWrapper}>
+        <table className={styles.Table}>
           <thead>
             <tr>
               {columns.map((column) => (
@@ -134,14 +138,14 @@ function Table<T extends object>({
                     column.sortable !== false && requestSort(String(column.key))
                   }
                   className={clsx(
-                    styles.headerCell,
-                    column.sortable !== false && styles.sortable,
+                    styles.HeaderCell,
+                    column.sortable !== false && styles.Sortable,
                   )}
                 >
-                  <div className={styles.headerCellContainer}>
+                  <div className={styles.HeaderCellContainer}>
                     <span>{column.header}</span>
                     {column.sortable !== false && (
-                      <span className={styles.sortIndicator}>
+                      <span className={styles.SortIndicator}>
                         {getSortIndicator(String(column.key))}
                       </span>
                     )}
@@ -149,7 +153,7 @@ function Table<T extends object>({
                 </th>
               ))}
               {(onEdit || onDelete) && (
-                <th className={styles.headerCell}>Действия</th>
+                <th className={styles.HeaderCell}>Действия</th>
               )}
             </tr>
           </thead>
@@ -161,13 +165,14 @@ function Table<T extends object>({
                 columns={columns}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                onRowClick={onRowClick}
               />
             ))}
             {paginatedData.length === 0 && (
               <tr>
                 <td
                   colSpan={columns.length + (onEdit || onDelete ? 1 : 0)}
-                  className={styles.emptyState}
+                  className={styles.EmptyState}
                 >
                   Нет данных для отображения
                 </td>
@@ -177,9 +182,9 @@ function Table<T extends object>({
         </table>
       </div>
 
-      {/* Пагинация */}
+      {/* Блок управления пагинацией */}
       {totalPages > 1 && (
-        <div className={styles.pagination}>
+        <div className={styles.Pagination}>
           <Button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
@@ -194,7 +199,7 @@ function Table<T extends object>({
               type="button"
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={clsx(currentPage === page && styles.activePage)}
+              className={clsx(currentPage === page && styles.ActivePage)}
               text={String(page)}
             />
           ))}

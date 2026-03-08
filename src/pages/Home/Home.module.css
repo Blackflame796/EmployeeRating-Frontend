@@ -1,0 +1,96 @@
+.Container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.Title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+
+.MainContent {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  border: 1px solid #2a2a3a;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ChartsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .ChartsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ChartWrapper {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid #2a2a3a;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Обеспечивает корректное сжатие графиков внутри грида */
+}
+
+@media (max-width: 600px) {
+  .ChartWrapper {
+    padding: 12px;
+  }
+  
+  .Container {
+    padding: 16px;
+  }
+}
+
+.ChartTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.EmptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #a0a0a0;
+  font-size: 16px;
+}
+
+.Tooltip {
+  background: #13111c;
+  border: 1px solid #2a2a3a;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.TooltipName {
+  font-weight: 600;
+  color: #62ba93;
+  margin-bottom: 4px;
+}
+
+.TooltipStat {
+  font-size: 13px;
+  color: #fff;
+}

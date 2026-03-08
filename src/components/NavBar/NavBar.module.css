@@ -1,0 +1,22 @@
+/* Стили для горизонтального меню навигации */
+.NavBar {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.NavBar a {
+    text-decoration: none;
+}
+
+.Active {
+    background: #62ba93 !important;
+    color: #13111c !important;
+}
+
+/* Скрываем навигацию на узких экранах, заменяя её сайдбаром */
+@media (max-width: 549px) {
+    .NavBar {
+        display: none;
+    }
+}

@@ -1,0 +1,50 @@
+/* Стили для контейнера поля ввода и метки */
+.FormGroup {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.Label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    color: #a0a0a0;
+    font-size: 14px;
+    font-weight: 500;
+    width: max-content;
+}
+
+.Input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid #2a2a3a;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.Input:focus {
+    outline: none;
+    border-color: #62ba93;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.Input::placeholder {
+    color: #4a4a5a;
+}
+
+.Input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+/* Скрываем стандартные стрелки управления для числового поля */
+.Input[type="number"]::-webkit-outer-spin-button,
+.Input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

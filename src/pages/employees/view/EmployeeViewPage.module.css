@@ -1,0 +1,169 @@
+.Container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap:10px;
+}
+
+.HeaderLeft {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.HeaderActions {
+    display: flex;
+    gap: 12px;
+}
+
+.ReturnButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #a0a0a0;
+    transition: all 0.2s ease;
+}
+
+.ReturnButton:hover {
+    color: #62ba93;
+    background-color: transparent;
+}
+
+.Title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.Content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+}
+
+.Card {
+    background: #13111c;
+    border: 3px solid #64748b;
+    border-radius: 15px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.RatingCard {
+    grid-column: 1 / -1; /* Make it more prominent by spanning full width or just fixed position */
+    order: -1; /* Ensure it's first in the grid */
+}
+
+.CardTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #2a2a3a;
+}
+
+.InfoGrid {
+    display: grid;
+    gap: 16px;
+}
+
+.InfoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.InfoLabel {
+    font-size: 13px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.InfoValue {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.RatingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.RatingBadge {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.RatingLabel {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.Error {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.LoadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.EditButton {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 600px) {
+    .ReturnButton {
+        display: none;
+    }
+    .Content {
+        grid-template-columns: 1fr;
+    }
+    
+    .Header {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+}

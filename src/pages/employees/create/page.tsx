@@ -1,90 +1,73 @@
 /**
- * Страница редактирования данных сотрудника
- * Позволяет изменять персональные данные и рабочие показатели
+ * Страница создания нового профиля сотрудника
+ * Содержит форму ввода всех рабочих и персональных показателей
  */
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import styles from "./EmployeesEditPage.module.css";
+import { useNavigate } from "react-router-dom";
+import styles from "./EmployeesCreatePage.module.css";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 import Select from "../../../components/Select/Select";
-import { GetEmployee, UpdateEmployee } from "../../../api/Employees";
+import { CreateEmployee } from "../../../api/Employees";
 import { GetDepartments } from "../../../api/Department";
 import type { Employee } from "../../../interfaces/Employee";
 import type { Department } from "../../../interfaces/Department";
 import Preloader from "../../../components/Preloader/Preloader";
-import { ArrowBigLeft } from "lucide-react";
 
-const EditEmployeePage = () => {
+const EmployeesCreatePage = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [departments, setDepartments] = useState<Department[]>([]);
 
-  const [formData, setFormData] = useState<Employee>({
-    id: undefined,
+  const [formData, setFormData] = useState<Omit<Employee, "id">>({
     first_name: "",
     second_name: "",
     surname: "",
     department_id: undefined,
-    revenue: 0,
-    quality: 0,
-    discipline: 0,
-    experience_years: 0,
-    projects_completed: 0,
-    client_satisfaction: 0,
-    teamwork_score: 0,
-  });
+    revenue: "",
+    quality: "",
+    discipline: "",
+    experience_years: "",
+    projects_completed: "",
+    client_satisfaction: "",
+    teamwork_score: "",
+  } as any);
 
-  // Комплексная загрузка начальных данных: профиль сотрудника и список доступных отделов
   useEffect(() => {
-    const loadData = async () => {
+    const loadDepartments = async () => {
       try {
-        setPageLoading(true);
-        const [employeeResponse, departmentsResponse] = await Promise.all([
-          GetEmployee(Number(id)),
-          GetDepartments(),
-        ]);
-
-        setDepartments(departmentsResponse.data);
-        setFormData(employeeResponse.data);
+        const response = await GetDepartments();
+        setDepartments(response.data);
+        if (response.data.length > 0) {
+          setFormData((prev) => ({
+            ...prev,
+            department_id: response.data[0].id,
+          }));
+        }
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Ошибка при загрузке данных",
-        );
-        console.error("Ошибка при загрузке:", err);
-      } finally {
-        setPageLoading(false);
+        console.error("Ошибка при загрузке отделов:", err);
       }
     };
 
-    if (id) {
-      loadData();
-    }
-  }, [id]);
+    loadDepartments();
+  }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value, type } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "number" ? parseFloat(value) || 0 : value,
-    }));
-  };
-
-  const handleSelectChange = (e: {
-    target: { name: string; value: string };
-  }) => {
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value ? parseInt(value) : undefined,
-    }));
+    // Обработка специализированного поля department_id для сохранения числового типа данных
+    if (name === "department_id") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value ? parseInt(value) : undefined,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: !isNaN(parseFloat(value)) ? parseFloat(value) : value,
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -95,49 +78,32 @@ const EditEmployeePage = () => {
     try {
       const dataToSubmit = {
         ...formData,
-        revenue: parseFloat(formData.revenue.toString()) || 0,
-        quality: parseInt(formData.quality.toString()) || 0,
-        discipline: parseInt(formData.discipline.toString()) || 0,
-        experience_years: parseFloat(formData.experience_years.toString()) || 0,
-        projects_completed:
-          parseInt(formData.projects_completed.toString()) || 0,
+        revenue: parseFloat(formData.revenue as any) || 0,
+        quality: parseInt(formData.quality as any) || 0,
+        discipline: parseInt(formData.discipline as any) || 0,
+        experience_years: parseFloat(formData.experience_years as any) || 0,
+        projects_completed: parseInt(formData.projects_completed as any) || 0,
         client_satisfaction:
-          parseFloat(formData.client_satisfaction.toString()) || 4.0,
-        teamwork_score: parseFloat(formData.teamwork_score.toString()) || 4.0,
+          parseFloat(formData.client_satisfaction as any) || 4.0,
+        teamwork_score: parseFloat(formData.teamwork_score as any) || 4.0,
       };
 
-      await UpdateEmployee(Number(id), dataToSubmit);
-      navigate(`/employees/${id}`);
+      await CreateEmployee(dataToSubmit);
+      navigate("/employees");
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
-          : "Произошла ошибка при обновлении сотрудника",
+          : "Произошла ошибка при создании сотрудника",
       );
     } finally {
       setLoading(false);
     }
   };
 
-  if (pageLoading) {
-    return (
-      <div className={styles.Container}>
-        <div className={styles.LoadingContainer}>
-          <Preloader />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.Container}>
-      <div className={styles.Header}>
-        <Link to={`/employees/${id}`} className={styles.ReturnButton}>
-          <ArrowBigLeft size={28} />
-        </Link>
-        <h1 className={styles.Title}>Редактирование сотрудника</h1>
-        <div style={{ width: 40 }}></div>
-      </div>
+      <h1 className={styles.Title}>Создание нового сотрудника</h1>
 
       <form onSubmit={handleSubmit} className={styles.Form}>
         {error && <div className={styles.Error}>{error}</div>}
@@ -213,21 +179,18 @@ const EditEmployeePage = () => {
           />
         </div>
 
-        <div className={styles.FormGroup}>
-          <Select
-            id="department_id"
-            name="department_id"
-            value={formData.department_id || ""}
-            onChange={handleSelectChange}
-            label="Отдел"
-            placeholder="Выберите отдел"
-            options={departments.map((dept) => ({
-              value: dept.id || 0,
-              label: dept.name,
-            }))}
-          />
-        </div>
-
+        <Select
+          id="department_id"
+          name="department_id"
+          value={formData.department_id || ""}
+          onChange={handleChange}
+          label="Отдел"
+          placeholder="Выберите отдел"
+          options={departments.map((dept) => ({
+            value: dept.id || 0,
+            label: dept.name,
+          }))}
+        />
         <div className={styles.FormRow4}>
           <Input
             id="experience_years"
@@ -286,13 +249,13 @@ const EditEmployeePage = () => {
           type="submit"
           disabled={loading}
           className={styles.SubmitButton}
-          text={loading ? "Сохранение..." : "Сохранить"}
+          text={loading ? "Создание..." : "Создать"}
         />
       </form>
 
-      {loading && <Preloader fullScreen />}
+      {loading && <Preloader fullScreen text="Создание сотрудника..." />}
     </div>
   );
 };
 
-export default EditEmployeePage;
+export default EmployeesCreatePage;

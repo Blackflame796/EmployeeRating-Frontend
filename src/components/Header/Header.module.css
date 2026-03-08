@@ -1,16 +1,23 @@
+/* Стили фиксированной шапки с эффектом размытия */
 .Header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     backdrop-filter: blur(70px);
-    transition: background-color 0.3s ease, opacity 0.3s ease;
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px 20px;
-    height: 80px;
-    gap: 20px;
+    height: 70px;
+    gap: 50px;
     box-sizing: border-box;
+}
+
+/* Адаптация для мобильных экранов: выравнивание по левому краю */
+@media (max-width: 549px) {
+    .Header {
+        justify-content: left;
+    }
 }

@@ -1,0 +1,156 @@
+.Container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.Form {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid #2a2a3a;
+}
+
+.FormGroup {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.FormRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.FormRow4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+    align-items: end;
+}
+
+
+@media (max-width: 768px) {
+    .FormRow {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .FormRow4 {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+.Label {
+    display: block;
+    margin-bottom: 8px;
+    color: #a0a0a0;
+    font-size: 14px;
+    font-weight: 500;
+    width: max-content;
+}
+
+.Input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid #2a2a3a;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.Input:focus {
+    outline: none;
+    border-color: #62ba93;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.Input::placeholder {
+    color: #4a4a5a;
+}
+
+.Input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.Input[type="number"]::-webkit-outer-spin-button,
+.Input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.Error {
+    background: rgba(250, 54, 54, 0.1);
+    border: 2px solid #fa3636;
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #fa3636;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.SubmitButton {
+    display: flex;
+    justify-self: center;
+    width: fit-content;
+    background: #62ba93 !important;
+    color: #13111c !important;
+    font-weight: 600 !important;
+    border: none !important;
+}
+
+.SubmitButton:hover:not(:disabled) {
+    background: #7fccaa !important;
+}
+
+.SubmitButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.LoadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .Container {
+        padding: 20px 15px;
+    }
+    
+    .Title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    .Form {
+        padding: 20px;
+    }
+    
+    .SubmitButton {
+        width: 100%;
+    }
+}

@@ -1,4 +1,7 @@
-// src/components/Preloader/Preloader.tsx
+/**
+ * Компонент индикатора загрузки (прелоадер)
+ * Обеспечивает плавное появление и исчезновение, а также минимальное время отображения для избежания мерцания
+ */
 import React, { useEffect, useState } from 'react';
 import styles from "./Preloader.module.css";
 import clsx from "clsx";
@@ -7,7 +10,7 @@ interface PreloaderProps {
     fullScreen?: boolean;
     text?: string;
     className?: string;
-    minimumDisplayTime?: number; // Минимальное время отображения в мс
+    minimumDisplayTime?: number; // Минимально гарантированное время показа в миллисекундах
     isLoading?: boolean;
 }
 
@@ -44,17 +47,17 @@ const Preloader: React.FC<PreloaderProps> = ({
 
     const loaderElement = (
         <div className={clsx(
-            styles.loaderWrapper,
-            !isVisible && styles.hidden
+            styles.LoaderWrapper,
+            !isVisible && styles.Hidden
         )}>
-            <span className={styles.loader} />
-            {text && <div className={styles.text}>{text}</div>}
+            <span className={styles.Loader} />
+            {text && <div className={styles.Text}>{text}</div>}
         </div>
     );
 
     if (fullScreen) {
         return (
-            <div className={clsx(styles.container, className)}>
+            <div className={clsx(styles.Container, className)}>
                 {loaderElement}
             </div>
         );
