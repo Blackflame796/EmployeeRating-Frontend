@@ -133,6 +133,14 @@ const EmployeeViewPage = () => {
               </span>
             </div>
             <div className={styles.InfoItem}>
+              <span className={styles.InfoLabel}>Заработная плата</span>
+              <span className={styles.InfoValue}>
+                {employee.salary !== null && employee.salary !== undefined 
+                  ? `${employee.salary.toLocaleString()} ₽` 
+                  : "—"}
+              </span>
+            </div>
+            <div className={styles.InfoItem}>
               <span className={styles.InfoLabel}>Среднее время опоздания</span>
               <span className={styles.InfoValue} style={{ color: employee.quality > 15 ? '#f87171' : '#fff' }}>
                 {employee.quality} мин

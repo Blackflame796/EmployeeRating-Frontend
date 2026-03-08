@@ -32,6 +32,7 @@
 }
 
 .ReturnButton:hover {
+    background-color: transparent;
     color: #62ba93;
 }
 

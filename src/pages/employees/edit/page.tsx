@@ -3,7 +3,7 @@
  * Позволяет изменять персональные данные и рабочие показатели
  */
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./EmployeesEditPage.module.css";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
@@ -36,6 +36,7 @@ const EditEmployeePage = () => {
     projects_completed: 0,
     client_satisfaction: 0,
     teamwork_score: 0,
+    salary: 0,
   });
 
   // Комплексная загрузка начальных данных: профиль сотрудника и список доступных отделов
@@ -132,9 +133,9 @@ const EditEmployeePage = () => {
   return (
     <div className={styles.Container}>
       <div className={styles.Header}>
-        <Link to={`/employees/${id}`} className={styles.ReturnButton}>
+        <Button type="button" onClick={() => navigate(-1)} className={styles.ReturnButton}>
           <ArrowBigLeft size={28} />
-        </Link>
+        </Button>
         <h1 className={styles.Title}>Редактирование сотрудника</h1>
         <div style={{ width: 40 }}></div>
       </div>
@@ -185,6 +186,18 @@ const EditEmployeePage = () => {
           required
           min="0"
           step="0.01"
+        />
+
+        <Input
+          id="salary"
+          name="salary"
+          type="number"
+          label="Заработная плата (рубли)"
+          value={formData.salary || 0}
+          onChange={handleChange}
+          placeholder="0"
+          required
+          min="0"
         />
 
         <div className={styles.FormRow}>
